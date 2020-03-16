@@ -11,7 +11,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
-    <name>BD2Period DOM</name>
+    <name>BD2Period Aggregator</name>
     <description>Aggregator for building BioDare period data</description>
     
     <dependencyManagement>
