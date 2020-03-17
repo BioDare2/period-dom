@@ -5,6 +5,7 @@
  */
 package ed.robust.dom.tsprocessing;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,10 +19,15 @@ import ed.robust.dom.tsprocessing.FailedPPA;
 import ed.robust.dom.tsprocessing.GenericPPAResult;
 import ed.robust.dom.tsprocessing.PPA;
 import ed.robust.dom.tsprocessing.PPAResult;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -50,7 +56,7 @@ public class PeriodDomJSONTests {
         // System.out.println(json);
         PPA cpy = mapper.readValue(json, PPA.class);
         
-        String json2 = mapper.writeValueAsString(org);
+        String json2 = mapper.writeValueAsString(cpy);
         // System.out.println(json2);
         
         assertEquals(json, json2);
@@ -60,7 +66,7 @@ public class PeriodDomJSONTests {
         json = mapper.writeValueAsString(org);
         cpy = mapper.readValue(json, PPA.class);        
         
-        json2 = mapper.writeValueAsString(org);
+        json2 = mapper.writeValueAsString(cpy);
         
         assertEquals(json, json2);
         assertEquals(org, cpy);
@@ -86,7 +92,7 @@ public class PeriodDomJSONTests {
         json = mapper.writeValueAsString(org);
         cpy = mapper.readValue(json, CosComponent.class);        
         
-        json2 = mapper.writeValueAsString(org);
+        json2 = mapper.writeValueAsString(cpy);
         
         assertEquals(json, json2);
         assertEquals(org, cpy);
@@ -123,7 +129,7 @@ public class PeriodDomJSONTests {
         //System.out.println(json);
         FFT_PPA cpy = mapper.readValue(json, FFT_PPA.class);
         
-        String json2 = mapper.writeValueAsString(org);
+        String json2 = mapper.writeValueAsString(cpy);
         //System.out.println(json2);
         
         assertEquals(json, json2);
@@ -167,7 +173,7 @@ public class PeriodDomJSONTests {
         //System.out.println(json);
         PPAResult cpy = mapper.readValue(json, PPAResult.class);
         
-        String json2 = mapper.writeValueAsString(org);
+        String json2 = mapper.writeValueAsString(cpy);
         //System.out.println(json2);
         
         assertEquals(json, json2);
@@ -199,16 +205,111 @@ public class PeriodDomJSONTests {
         org.setFit(fit);
         
         String json = mapper.writeValueAsString(org);
-        System.out.println(json);
+        //System.out.println(json);
         PPAResult cpy = mapper.readValue(json, PPAResult.class);
         
-        String json2 = mapper.writeValueAsString(org);
-        System.out.println(json2);
+        String json2 = mapper.writeValueAsString(cpy);
+        //System.out.println(json2);
         
         assertEquals(json, json2);
         assertEquals(org, cpy);
         
+    }   
+    
+    @Test
+    @Ignore("Generic list saving with inherited types is not working")
+    public void canBeSavedAndReadFromList() throws Exception {
+        
+        FFT_PPA org = new FFT_PPA();
+        org.addCOS(new CosComponent(new PPA(24, 0.24, 5, 0.5, 10, 0.1, 1, 0.01, 0.12, 0.13, 0.14)
+                , new PPA(24,2,10), new PPA(24,3,10), new PPA(24,4,10)));
+        
+        org.addCOS(new CosComponent(10, 0.1, 25, 0.25, 5, 0.5));
+        org.setCircadian(true);
+
+        org.setGOF(0.23);
+        org.setIgnored(false);
+        org.setMessage("I am messge");
+        //org.setMethodError(0.3);
+        org.setMethodVersion("NLLS_2");
+        org.setNeedsAttention(true);
+        org.setProcessingTime(123);
+        org.setShift(0.5);
+        org.setTrendInterception(1);
+        org.setTrendSlope(2);
+        
+        TimeSeries fit = new TimeSeries();
+        fit.add(0, 1);
+        fit.add(new Timepoint(1, 2, null, 0.1));
+        
+        org.setFit(fit);
+        
+        FailedPPA org2 = new FailedPPA("yes");
+        
+        List<PPAResult> list = new ArrayList<>();
+        list.add(org);
+        list.add(org2);
+        
+        String json = mapper.writeValueAsString(list);
+        //System.out.println(json);
+        List<PPAResult> cpy = mapper.readValue(json, new TypeReference<List<PPAResult>>() { });
+        
+        String json2 = mapper.writeValueAsString(cpy);
+        //System.out.println("--------");
+        //System.out.println(json2);
+        
+        assertEquals(json, json2);
+        assertEquals(list, cpy);
+        
     }    
+    
+    
+    @Test
+    public void canBeSavedFromTypedInnerList() throws Exception {
+        
+        FFT_PPA org = new FFT_PPA();
+        org.addCOS(new CosComponent(new PPA(24, 0.24, 5, 0.5, 10, 0.1, 1, 0.01, 0.12, 0.13, 0.14)
+                , new PPA(24,2,10), new PPA(24,3,10), new PPA(24,4,10)));
+        
+        org.addCOS(new CosComponent(10, 0.1, 25, 0.25, 5, 0.5));
+        org.setCircadian(true);
+
+        org.setGOF(0.23);
+        org.setIgnored(false);
+        org.setMessage("I am messge");
+        //org.setMethodError(0.3);
+        org.setMethodVersion("NLLS_2");
+        org.setNeedsAttention(true);
+        org.setProcessingTime(123);
+        org.setShift(0.5);
+        org.setTrendInterception(1);
+        org.setTrendSlope(2);
+        
+        TimeSeries fit = new TimeSeries();
+        fit.add(0, 1);
+        fit.add(new Timepoint(1, 2, null, 0.1));
+        
+        org.setFit(fit);
+        
+        FailedPPA org2 = new FailedPPA("yes");
+        
+        TypedList2 list = new TypedList2();
+        list.list.add(org);
+        list.list.add(org2);
+        
+        String json = mapper.writeValueAsString(list);
+        //System.out.println(json);
+        TypedList cpy = mapper.readValue(json, TypedList2.class);
+        
+        String json2 = mapper.writeValueAsString(cpy);
+        //System.out.println("--------");
+        //System.out.println(json2);
+        
+        assertEquals(json, json2);
+        assertEquals(list, cpy);
+
+    }    
+    
     
     @Test
     public void failedPPACanBeSavedAndReadFromAbstract() throws Exception {
