@@ -4,6 +4,12 @@
  */
 package ed.robust.dom.tsprocessing;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -21,8 +27,12 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
 @XmlSeeAlso({PPAResult.class})
+@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, setterVisibility = NONE)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
 public class Result {
     
+    @JsonProperty("procTime")
     protected long processingTime;
 
     public long getProcessingTime() {
@@ -31,6 +41,31 @@ public class Result {
 
     public void setProcessingTime(long processingTime) {
         this.processingTime = processingTime;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + (int) (this.processingTime ^ (this.processingTime >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Result other = (Result) obj;
+        if (this.processingTime != other.processingTime) {
+            return false;
+        }
+        return true;
     }
     
     

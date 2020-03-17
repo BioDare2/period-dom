@@ -1,5 +1,11 @@
 package ed.robust.dom.tsprocessing;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -9,21 +15,28 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
 import ed.robust.dom.data.TimeSeries;
+import java.util.Objects;
 
 @XmlSeeAlso({GenericPPAResult.class,FailedPPA.class,FFT_PPA.class})
 @XmlAccessorType(XmlAccessType.FIELD)
+@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, setterVisibility = NONE)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public abstract class PPAResult extends Result implements Serializable {
 
     @XmlAttribute(name = "attention")
+    @JsonProperty("attention")    
     protected boolean needsAttention;
 
     @XmlAttribute(name = "circadian")
+    @JsonProperty("circ")    
     protected boolean circadian;
 
     @XmlAttribute(name = "ignored")
+    @JsonProperty("ingored")    
     protected boolean ignored;
 
     @XmlAttribute(name = "method")
+    @JsonProperty("methodV")    
     protected String methodVersion;
     
     /*@XmlAttribute(name = "GOF")
@@ -223,6 +236,53 @@ public abstract class PPAResult extends Result implements Serializable {
 
     public void setMethodVersion(String methodVersion) {
         this.methodVersion = methodVersion;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + (this.needsAttention ? 1 : 0);
+        hash = 79 * hash + (this.circadian ? 1 : 0);
+        hash = 79 * hash + (this.ignored ? 1 : 0);
+        hash = 79 * hash + Objects.hashCode(this.methodVersion);
+        hash = 79 * hash + Objects.hashCode(this.message);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        final PPAResult other = (PPAResult) obj;
+        if (this.needsAttention != other.needsAttention) {
+            return false;
+        }
+        if (this.circadian != other.circadian) {
+            return false;
+        }
+        if (this.ignored != other.ignored) {
+            return false;
+        }
+        if (!Objects.equals(this.methodVersion, other.methodVersion)) {
+            return false;
+        }
+        if (!Objects.equals(this.message, other.message)) {
+            return false;
+        }
+        if (!Objects.equals(this.fit, other.fit)) {
+            return false;
+        }
+        return true;
     }
 
     

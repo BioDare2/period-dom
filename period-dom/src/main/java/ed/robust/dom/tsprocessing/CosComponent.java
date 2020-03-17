@@ -1,7 +1,12 @@
 package ed.robust.dom.tsprocessing;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -11,6 +16,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlType(name = "COS")
 @XmlAccessorType(XmlAccessType.FIELD)
+@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, setterVisibility = NONE)
 public class CosComponent implements Serializable{
         private static final long serialVersionUID = 10L;
         
@@ -20,24 +26,28 @@ public class CosComponent implements Serializable{
 	 * Stores period, phase, amplitude and potential errors established in the particular analysis method manner
 	 */
 	@XmlElement(name="method")
-	protected PPA PPAMethodSpecific;
+        @JsonProperty("method")
+        protected PPA PPAMethodSpecific;
 	
 	/**
 	 * Stores period, phase, amplitude which were determined using the phase by avg max method
 	 */
 	@XmlElement(name="pbam")
+        @JsonProperty("pbam")
 	protected PPA PPAByAvgMax;
 	
 	/**
 	 * Stores period, phase, amplitude which were determined using the phase by cos fit method
 	 */
 	@XmlElement(name="pbf")
+        @JsonProperty("pbf")
 	protected PPA PPAByFit;
 	
 	/**
 	 * Stores period, phase, amplitude which were determined using the phase by first peak
 	 */
 	@XmlElement(name="pbfp")
+        @JsonProperty("pbfp")
 	protected PPA PPAByFirstPeak;
 	
 	    
@@ -161,6 +171,40 @@ public class CosComponent implements Serializable{
         sb.append(" A:").append(formatter.format(ppa.getAmplitude()));
         if (ppa.hasAmplitudeError()) sb.append("(").append(formatter.format(ppa.getAmplitudeError())).append(")");
         return sb.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 43 * hash + Objects.hashCode(this.PPAMethodSpecific);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CosComponent other = (CosComponent) obj;
+        if (!Objects.equals(this.PPAMethodSpecific, other.PPAMethodSpecific)) {
+            return false;
+        }
+        if (!Objects.equals(this.PPAByAvgMax, other.PPAByAvgMax)) {
+            return false;
+        }
+        if (!Objects.equals(this.PPAByFit, other.PPAByFit)) {
+            return false;
+        }
+        if (!Objects.equals(this.PPAByFirstPeak, other.PPAByFirstPeak)) {
+            return false;
+        }
+        return true;
     }
 
         

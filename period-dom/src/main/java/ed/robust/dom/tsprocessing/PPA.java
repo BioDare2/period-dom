@@ -1,6 +1,13 @@
 package ed.robust.dom.tsprocessing;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -9,6 +16,8 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlType(name = "PPA")
 @XmlAccessorType(XmlAccessType.FIELD)
+@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, setterVisibility = NONE)
+@JsonInclude(Include.NON_NULL)
 public class PPA implements Serializable {
 
     /**
@@ -17,21 +26,29 @@ public class PPA implements Serializable {
 	private static final long serialVersionUID = 10L;
 	
         @XmlAttribute(name = "per")
+        @JsonProperty("per")
         double period;
         @XmlAttribute(name = "ph")
+        @JsonProperty("ph")
         double phase;
         @XmlAttribute(name = "amp")
+        @JsonProperty("amp")
         double amplitude;
         @XmlAttribute(name = "off")
+        @JsonProperty("off")
         double offset;
 
         @XmlAttribute(name = "perE")
+        @JsonProperty("perE")
         Double periodError;
         @XmlAttribute(name = "phE")
+        @JsonProperty("phE")
         Double phaseError;
         @XmlAttribute(name = "ampE")
+        @JsonProperty("ampE")
         Double amplitudeError;
         @XmlAttribute(name = "offE")
+        @JsonProperty("offE")
         Double offsetError;
 
         /*@XmlAttribute(name = "err")
@@ -39,18 +56,23 @@ public class PPA implements Serializable {
         Double globalError;*/
         
         @XmlAttribute(name = "jERR")
+        @JsonProperty("jERR")
         Double joinedError;
         
         @XmlAttribute(name = "mERR")
+        @JsonProperty("mERR")
         Double methodError;        
         
         @XmlAttribute(name = "GOF")
+        @JsonProperty("GOF")
         Double GOF;
 
         @XmlAttribute(name = "powV")
+        @JsonProperty("powV")
         Double powerValue;
         
         @XmlAttribute(name = "sig")
+        @JsonProperty("sig")
         Double randomness;
 	
 	public PPA() {
@@ -265,6 +287,69 @@ public class PPA implements Serializable {
         public boolean hasRandomness() {
             return randomness != null;
         }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.period) ^ (Double.doubleToLongBits(this.period) >>> 32));
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.phase) ^ (Double.doubleToLongBits(this.phase) >>> 32));
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.amplitude) ^ (Double.doubleToLongBits(this.amplitude) >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PPA other = (PPA) obj;
+        if (Double.doubleToLongBits(this.period) != Double.doubleToLongBits(other.period)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.phase) != Double.doubleToLongBits(other.phase)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.amplitude) != Double.doubleToLongBits(other.amplitude)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.offset) != Double.doubleToLongBits(other.offset)) {
+            return false;
+        }
+        if (!Objects.equals(this.periodError, other.periodError)) {
+            return false;
+        }
+        if (!Objects.equals(this.phaseError, other.phaseError)) {
+            return false;
+        }
+        if (!Objects.equals(this.amplitudeError, other.amplitudeError)) {
+            return false;
+        }
+        if (!Objects.equals(this.offsetError, other.offsetError)) {
+            return false;
+        }
+        if (!Objects.equals(this.joinedError, other.joinedError)) {
+            return false;
+        }
+        if (!Objects.equals(this.methodError, other.methodError)) {
+            return false;
+        }
+        if (!Objects.equals(this.GOF, other.GOF)) {
+            return false;
+        }
+        if (!Objects.equals(this.powerValue, other.powerValue)) {
+            return false;
+        }
+        if (!Objects.equals(this.randomness, other.randomness)) {
+            return false;
+        }
+        return true;
+    }
         
         
 }

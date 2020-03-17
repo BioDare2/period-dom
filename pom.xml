@@ -24,6 +24,7 @@
 		<module>period-dep-bom</module>
 		<module>period-dom</module>
 		<module>period-util</module>
+		<module>period-json</module>
 		<module>period-dom-bom</module>
 		<module>period-commons</module>
 	</modules>	

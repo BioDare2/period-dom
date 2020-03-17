@@ -63,7 +63,27 @@
         <dependency>
             <groupId>ed.biodare.data</groupId>
             <artifactId>error</artifactId>
-        </dependency>         
+        </dependency>   
+        
+        <!-- for annotations to customize json -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <!--<version>2.10.3</version>-->
+        </dependency>  
+        
+        <!-- for json saving -->         
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <scope>test</scope>
+        </dependency>  
+        
+        <dependency>
+            <groupId>ed.biodare.data</groupId>
+            <artifactId>data-json</artifactId>
+            <scope>test</scope>
+        </dependency>                                                                                               
         
         <dependency>
             <groupId>junit</groupId>
