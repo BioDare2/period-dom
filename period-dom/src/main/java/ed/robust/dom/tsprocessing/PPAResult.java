@@ -279,6 +279,7 @@ public abstract class PPAResult extends Result implements Serializable {
         if (!Objects.equals(this.message, other.message)) {
             return false;
         }
+        
         if (!Objects.equals(this.fit, other.fit)) {
             return false;
         }
