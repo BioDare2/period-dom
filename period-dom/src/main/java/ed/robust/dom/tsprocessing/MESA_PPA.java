@@ -14,6 +14,10 @@ public class MESA_PPA extends GenericPPAResult {
     double M;
     int code;
     
+    MESA_PPA() {
+        super();
+    }
+    
     public MESA_PPA(PPA ppa) {
         super(ppa);
     }
