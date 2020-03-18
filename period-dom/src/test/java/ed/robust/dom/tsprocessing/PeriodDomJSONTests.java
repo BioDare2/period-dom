@@ -251,6 +251,40 @@ public class PeriodDomJSONTests {
     }   
     
     @Test
+    public void mffPPAResultCanBeSavedAndReadFromAbstract() throws Exception {
+        
+        MFF_PPA org = new MFF_PPA(new PPA(24, 0.24, 5, 0.5, 10, 0.1, 1, 0.01, 0.12, 0.13, 0.14));
+        
+        org.setCircadian(true);
+
+        org.setGOF(0.23);
+        org.setIgnored(false);
+        org.setMessage("I am messge");
+        org.setMethodError(0.3);
+        org.setMethodVersion("MFF_2");
+        org.setNeedsAttention(true);
+        org.setProcessingTime(123);
+        
+        TimeSeries fit = new TimeSeries();
+        fit.add(0, 1);
+        fit.add(new Timepoint(1, 2, null, 0.1));
+        
+        org.setFit(fit);
+        
+        String json = mapper.writeValueAsString(org);
+        //System.out.println(json);
+        PPAResult cpy = mapper.readValue(json, PPAResult.class);
+        
+        String json2 = mapper.writeValueAsString(cpy);
+        //System.out.println(json2);
+        
+        assertEquals(json, json2);
+        assertEquals(org, cpy);
+        
+    }   
+    
+    
+    @Test
     @Ignore("Generic list saving with inherited types is not working")
     public void canBeSavedAndReadFromList() throws Exception {
         
