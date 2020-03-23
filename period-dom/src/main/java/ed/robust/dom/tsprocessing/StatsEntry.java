@@ -8,6 +8,7 @@ package ed.robust.dom.tsprocessing;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -24,6 +25,10 @@ public class StatsEntry implements Iterable<PPAStats> {
 
     @XmlAttribute
     long jobId;
+    
+    @XmlAttribute
+    String uuid;
+    
 
     @XmlElement(name="stats")
     List<PPAStats> stats = new ArrayList<>();
@@ -33,6 +38,11 @@ public class StatsEntry implements Iterable<PPAStats> {
     public StatsEntry(long jobId) {
         this.jobId = jobId;
     }
+    
+    public StatsEntry(UUID jobId) {
+        this.jobId = uuid2long(jobId);
+        this.uuid = jobId.toString();
+    }    
 
 
     public List<PPAStats> getStats() {
@@ -51,6 +61,16 @@ public class StatsEntry implements Iterable<PPAStats> {
 	this.jobId = jobId;
     }
 
+    public UUID getUuid() {
+        return UUID.fromString(uuid);
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid.toString();
+    }
+    
+    
+
     public void add(PPAStats stat) {
 	stats.add(stat);
     }
@@ -60,6 +80,8 @@ public class StatsEntry implements Iterable<PPAStats> {
 	return getStats().iterator();
     }
 
-
+    public static final long uuid2long(UUID id) {
+        return id.getLeastSignificantBits()+id.getMostSignificantBits();
+    } 
 
 }
