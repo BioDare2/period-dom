@@ -140,8 +140,6 @@ public class Statistics implements Serializable {
         this.sum = sum;
     }
        
-        
-        
     public double getVariance() {
         return Math.pow(stdDev, 2);
     }
