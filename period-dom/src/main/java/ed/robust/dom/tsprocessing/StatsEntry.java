@@ -5,6 +5,10 @@
 
 package ed.robust.dom.tsprocessing;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, setterVisibility = NONE)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class StatsEntry implements Iterable<PPAStats> {
 
     @XmlAttribute

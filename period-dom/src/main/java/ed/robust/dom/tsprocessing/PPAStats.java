@@ -4,6 +4,11 @@
  */
 package ed.robust.dom.tsprocessing;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import static ed.robust.dom.tsprocessing.PhaseType.ByAvgMax;
 import static ed.robust.dom.tsprocessing.PhaseType.ByFirstPeak;
 import static ed.robust.dom.tsprocessing.PhaseType.ByFit;
@@ -41,16 +46,22 @@ import javax.xml.bind.annotation.XmlType;
     "phaseStatsByAvgMaxCirc"
     
 })
+@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, setterVisibility = NONE)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PPAStats {
 
 
 	@XmlAttribute(name="biolId")
+        @JsonProperty("biolId")
 	long biolDescId;
+        
 	@XmlAttribute(name="envId")
+        @JsonProperty("envId")
 	long environmentId;
         
 	@XmlAttribute(name="memberDataId")
         long memberDataId;
+        
 	@XmlAttribute(name="rawId")
         long rawId;
 
@@ -58,44 +69,59 @@ public class PPAStats {
         WeightedStat periodStats;
         
 	@XmlElement(name="phByMethod")
+        @JsonProperty("phByMethod")
         WeightedStat phaseStatsByMethod;
         
 	@XmlElement(name="phByFit")
+        @JsonProperty("phByFit")
         WeightedStat phaseStatsByFit;
         
 	@XmlElement(name="phByFP")
+        @JsonProperty("phByFP")
         WeightedStat phaseStatsByFirstPeak;
         
 	@XmlElement(name="phByAM")
+        @JsonProperty("phByAM")
         WeightedStat phaseStatsByAvgMax;
         
 	@XmlElement(name="ampByMethod")
+        @JsonProperty("ampByMethod")
         WeightedStat ampStatsByMethod;
         
 	@XmlElement(name="ampByFit")
+        @JsonProperty("ampByFit")
         WeightedStat ampStatsByFit;
         
 	@XmlElement(name="ampByFP")
+        @JsonProperty("ampByFP")
         WeightedStat ampStatsByFirstPeak;
         
 	@XmlElement(name="ampByAM")
+        @JsonProperty("ampByAM")
         WeightedStat ampStatsByAvgMax;
         
 	@XmlElement(name="GOF")
+        @JsonProperty("GOF")
         Statistics GOFStats;
-	@XmlElement(name="jERR")
+
+        @XmlElement(name="jERR")
+        @JsonProperty("jERR")
         Statistics joinedErrorStats;
         
 	@XmlElement(name="phByMethodCirc")
+        @JsonProperty("phByMethodCirc")
         WeightedStat phaseStatsByMethodCirc;
         
 	@XmlElement(name="phByFitCirc")
+        @JsonProperty("phByFitCirc")
         WeightedStat phaseStatsByFitCirc;
         
 	@XmlElement(name="phByFPCirc")
+        @JsonProperty("phByFPCirc")
         WeightedStat phaseStatsByFirstPeakCirc;
         
 	@XmlElement(name="phByAMCirc")
+        @JsonProperty("phByAMCirc")
         WeightedStat phaseStatsByAvgMaxCirc;
 
         

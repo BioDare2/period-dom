@@ -4,6 +4,10 @@
  */
 package ed.robust.dom.tsprocessing;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import static ed.robust.dom.tsprocessing.WeightingType.ByGOF;
 import static ed.robust.dom.tsprocessing.WeightingType.ByJERR;
 import static ed.robust.dom.tsprocessing.WeightingType.BySpecERR;
@@ -24,6 +28,8 @@ import javax.xml.bind.annotation.XmlType;
     "jerrWeighted",
     "specWeighted",
 })
+@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, setterVisibility = NONE)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class WeightedStat {
     
     @XmlElement(name="orgStat")

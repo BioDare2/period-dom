@@ -4,6 +4,10 @@
  */
 package ed.robust.dom.tsprocessing;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -23,6 +27,8 @@ import javax.xml.bind.annotation.XmlType;
     "kurtosis",
     "skewness"
 })
+@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, setterVisibility = NONE)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Statistics implements Serializable {
     
         private static final long serialVersionUID = 10L;
