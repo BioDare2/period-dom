@@ -30,11 +30,6 @@
             <version>${revision}</version> 
         </dependency>		
 		
-        <!--<dependency>
-            <groupId>ed.biodare.period</groupId>
-            <artifactId>period-json</artifactId>
-            <version>1.6-SNAPSHOT</version> 
-        </dependency>-->		
 				
 		</dependencies>
     </dependencyManagement>

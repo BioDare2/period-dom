@@ -83,12 +83,6 @@
 		<module>period-util</module>
 		<module>period-dom-bom</module>
 		<module>period-commons</module>
-		<!-- 
-		<module>period-dep-bom</module>
-		
-		<module>period-json</module>
-		
-		 -->
 	</modules>	
 	
 	<build>
