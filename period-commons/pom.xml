@@ -4,7 +4,7 @@
     <parent>
         <groupId>ed.biodare.period</groupId>
         <artifactId>dom-parent</artifactId>
-        <version>${revision}</version>
+        <version>1.6.0-SNAPSHOT</version>
     </parent>
     <artifactId>commons</artifactId>
     <!--<version>1.6.0-SNAPSHOT</version>-->
@@ -19,7 +19,7 @@
             <dependency>
                     <groupId>ed.biodare.period</groupId>
                     <artifactId>period-dom-bom</artifactId>
-                    <version>${revision}</version>
+                    <version>${project.version}</version>
                     <type>pom</type>
                     <scope>import</scope>
             </dependency>                        
