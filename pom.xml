@@ -2,31 +2,93 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ed.biodare.period</groupId>
-    <artifactId>dom-aggregator</artifactId>
-    <version>1.6.0-SNAPSHOT</version>
+    <artifactId>dom-parent</artifactId>
+    <version>${revision}</version>
     <packaging>pom</packaging>
     <properties>
+		<revision>1.6.0-SNAPSHOT</revision>
+		<bd.data.version>1.6.0-SNAPSHOT</bd.data.version>
+		<jackson.version>2.10.3</jackson.version>
+		<math.version>3.6.1</math.version>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
-    <name>BD2Period Aggregator</name>
-    <description>Aggregator for building BioDare period data</description>
+    <name>BD2Period Parent</name>
+    <description>Parent and aggregator for building BioDare period dom and utils</description>
     
     <dependencyManagement>
+
+        <dependencies>
+		
+
+		<dependency>
+			<groupId>ed.biodare.data</groupId>
+			<artifactId>data-bom</artifactId>
+			<version>${bd.data.version}</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>   
+
+		<dependency>
+			<groupId>ed.biodare.data</groupId>
+			<artifactId>data-util-bom</artifactId>
+			<version>${bd.data.version}</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>${math.version}</version>
+        </dependency>		
+		
+        <!-- for json saving -->         
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>	
+
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.2</version>
+        </dependency> 		
+		
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+        </dependency>		
+		
+		</dependencies>
+		
     </dependencyManagement>
 	
     <dependencies>
     </dependencies>
 	
+	
 	<modules>
-		<module>period-dep-bom</module>
 		<module>period-dom</module>
 		<module>period-util</module>
-		<module>period-json</module>
 		<module>period-dom-bom</module>
 		<module>period-commons</module>
+		<!-- 
+		<module>period-dep-bom</module>
+		
+		<module>period-json</module>
+		
+		 -->
 	</modules>	
 	
 	<build>
@@ -36,6 +98,12 @@
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>2.8.2</version>
 				</plugin>
+				
+				<plugin>
+				  <groupId>org.apache.maven.plugins</groupId>
+				  <artifactId>maven-source-plugin</artifactId>
+				  <version>3.2.1</version>
+				</plugin>				
 			</plugins>
 		</pluginManagement>
 	</build>	

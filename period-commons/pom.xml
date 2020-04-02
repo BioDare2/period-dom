@@ -1,58 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ed.biodare.period</groupId>
+    <parent>
+        <groupId>ed.biodare.period</groupId>
+        <artifactId>dom-parent</artifactId>
+        <version>${revision}</version>
+    </parent>
     <artifactId>commons</artifactId>
-    <version>1.6.0-SNAPSHOT</version>
+    <!--<version>1.6.0-SNAPSHOT</version>-->
     <packaging>pom</packaging>
     <properties>
-        <java.version>11</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
     </properties>
     <name>BD2Period Commons</name>
     
     <dependencyManagement>
         <dependencies>
-		
-            <dependency>
-                    <groupId>ed.biodare.data</groupId>
-                    <artifactId>data-bom</artifactId>
-                    <version>1.6.0-SNAPSHOT</version>
-                    <type>pom</type>
-                    <scope>import</scope>
-            </dependency>
-            
-            <dependency>
-                    <groupId>ed.biodare.data</groupId>
-                    <artifactId>data-util-bom</artifactId>
-                    <version>1.6.0-SNAPSHOT</version>
-                    <type>pom</type>
-                    <scope>import</scope>
-            </dependency>                                     
-            
+		            
             <dependency>
                     <groupId>ed.biodare.period</groupId>
                     <artifactId>period-dom-bom</artifactId>
-                    <version>1.6.0-SNAPSHOT</version>
+                    <version>${revision}</version>
                     <type>pom</type>
                     <scope>import</scope>
-            </dependency>            
-            
-
-				
+            </dependency>                        
+		
         </dependencies>
     </dependencyManagement>    
     
     <dependencies>
         
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
-        <!--<dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-math3</artifactId>
-            <version>3.6.1</version>
-        </dependency>-->
         
         <!-- timeseries dom -->
         <dependency>
@@ -86,45 +62,23 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.10.3</version>
             <scope>test</scope>
         </dependency>
         
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-            <version>2.3.2</version>
             <scope>test</scope>
         </dependency>        
-        
-        <!-- for jaxb support --> 
-        <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
-        <!--<dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version> 
-            <scope>test</scope>
-        </dependency>-->        
-                
+                        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13</version>
             <scope>test</scope>
         </dependency>  
         
 
     </dependencies>    
-    
-    <build>
-            <pluginManagement>
-                    <plugins>
-                            <plugin>
-                                    <artifactId>maven-deploy-plugin</artifactId>
-                                    <version>2.8.2</version>
-                            </plugin>
-                    </plugins>
-            </pluginManagement>
-    </build>  
+      
         
 </project>
