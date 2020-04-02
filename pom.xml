@@ -116,6 +116,11 @@
 		  <plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-release-plugin</artifactId>
+		   <configuration>
+			  <autoVersionSubmodules>true</autoVersionSubmodules>
+			  <!--<tagNameFormat>v@{project.version}</tagNameFormat>
+			  <releaseProfiles>releases</releaseProfiles>-->
+		   </configuration>			
 		  </plugin>
 		</plugins>		
 	</build>	
