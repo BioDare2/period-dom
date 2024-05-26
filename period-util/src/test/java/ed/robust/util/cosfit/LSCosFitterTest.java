@@ -6,6 +6,7 @@ package ed.robust.util.cosfit;
 
 import ed.robust.dom.data.TimeSeries;
 import ed.robust.dom.tsprocessing.PPA;
+import ed.robust.util.Configuration;
 import ed.robust.util.timeseries.TSGenerator;
 import ed.robust.util.timeseries.TimeSeriesFileHandler;
 import java.io.File;
@@ -28,6 +29,7 @@ public class LSCosFitterTest {
     public LSCosFitterTest() {
     }
 
+    
     
     /**
      * Test of makeFitCos method, of class LSCosFitter.
@@ -53,7 +55,7 @@ public class LSCosFitterTest {
         
         phase = 6;
         fit = TSGenerator.makeCos(N, step, period, phase,amp);
-        TimeSeriesFileHandler.saveToText(fit, new File("E:/Temp/cos.csv"), ",");
+        TimeSeriesFileHandler.saveToText(fit, Configuration.tempFile("cos.csv"), ",");
         
         
         for (phase = 0;phase<period;phase+=1) {
@@ -156,7 +158,7 @@ public class LSCosFitterTest {
             series.add(fit);
        }
         
-        TimeSeriesFileHandler.saveToText(series, new File("E:/Temp/phase.csv"), ",");
+        TimeSeriesFileHandler.saveToText(series, Configuration.tempFile("phase.csv"), ",");
     }
     
     
