@@ -24,6 +24,14 @@
 	  <tag>HEAD</tag>
   </scm>
 	
+        
+    <modules>
+            <module>period-dom</module>
+            <module>period-util</module>
+            <module>period-bom</module>
+            <module>period-commons</module>
+    </modules>
+                
     <dependencyManagement>
 
         <dependencies>
@@ -77,12 +85,7 @@
     </dependencies>
 	
 	
-	<modules>
-		<module>period-dom</module>
-		<module>period-util</module>
-		<module>period-dom-bom</module>
-		<module>period-commons</module>
-	</modules>	
+	
 	
 	<build>
 		<pluginManagement>
