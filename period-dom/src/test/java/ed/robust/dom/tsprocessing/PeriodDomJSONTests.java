@@ -5,11 +5,13 @@
  */
 package ed.robust.dom.tsprocessing;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.core.util.DefaultIndenter;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.core.util.DefaultIndenter;
+import tools.jackson.core.util.DefaultPrettyPrinter;
+import tools.jackson.core.util.Separators;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.SerializationFeature;
+import tools.jackson.databind.json.JsonMapper;
 import ed.biodare.data.json.TimeSeriesModule;
 import ed.robust.dom.data.TimeSeries;
 import ed.robust.dom.data.Timepoint;
@@ -434,18 +436,20 @@ public class PeriodDomJSONTests {
         
     }    
     
-
-    
     public static ObjectMapper configureMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        DefaultPrettyPrinter  pp = (new DefaultPrettyPrinter())
-                .withoutSpacesInObjectEntries()
-                .withArrayIndenter(new DefaultPrettyPrinter.NopIndenter())
-                .withObjectIndenter(new DefaultIndenter(" ", "\n"));
-        mapper.setDefaultPrettyPrinter(pp);
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        
-        mapper.registerModule(new TimeSeriesModule());
+	ObjectMapper mapper = JsonMapper.builder()
+	    .addModule(new TimeSeriesModule())
+	    .defaultPrettyPrinter(
+				  new DefaultPrettyPrinter()
+				  .withSeparators(
+						  Separators.createDefaultInstance()
+						  .withObjectEntrySeparator(',')
+						  )
+				  .withArrayIndenter(DefaultPrettyPrinter.NopIndenter.instance())
+				  .withObjectIndenter(new DefaultIndenter(" ", "\n"))
+				  )
+	    .enable(SerializationFeature.INDENT_OUTPUT)
+	    .build();
 
         return mapper;
     }
