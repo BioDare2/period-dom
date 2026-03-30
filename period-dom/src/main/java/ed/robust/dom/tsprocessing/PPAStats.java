@@ -13,11 +13,11 @@ import static ed.robust.dom.tsprocessing.PhaseType.ByAvgMax;
 import static ed.robust.dom.tsprocessing.PhaseType.ByFirstPeak;
 import static ed.robust.dom.tsprocessing.PhaseType.ByFit;
 import static ed.robust.dom.tsprocessing.PhaseType.ByMethod;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  *

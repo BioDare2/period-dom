@@ -12,10 +12,10 @@ import static ed.robust.dom.tsprocessing.WeightingType.ByGOF;
 import static ed.robust.dom.tsprocessing.WeightingType.ByJERR;
 import static ed.robust.dom.tsprocessing.WeightingType.BySpecERR;
 import static ed.robust.dom.tsprocessing.WeightingType.None;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  *
