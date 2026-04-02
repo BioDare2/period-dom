@@ -3,6 +3,7 @@ package ed.robust.ppa;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
  *
@@ -35,7 +36,6 @@ public enum PPAMethod {
         this.shortName = shortName;
         this.on = on;
     }
-    
 
     public String getFriendlyName() {
 	return friendlyName;
@@ -46,6 +46,23 @@ public enum PPAMethod {
 	return friendlyName;
     }
 
+    // Added following spring-boot 4 / Jackson 3 update
+    // Let Jackson identify a method by either method name or friendly name
+    @JsonCreator
+    public static PPAMethod fromString(String value) {
+        if (value == null) {
+            return null;
+        }
+
+        for (PPAMethod method : values()) {
+            if (method.name().equals(value) || method.friendlyName.equals(value)) {
+                return method;
+            }
+        }
+
+        throw new IllegalArgumentException("Unknown PPAMethod: " + value);
+    }
+
     public static List<PPAMethod> getOnMethods() {
         if (onMethods == null) {
             List<PPAMethod> list = new ArrayList<>(values().length);
@@ -54,6 +71,4 @@ public enum PPAMethod {
         }
         return onMethods;
     }
-
-
 }
