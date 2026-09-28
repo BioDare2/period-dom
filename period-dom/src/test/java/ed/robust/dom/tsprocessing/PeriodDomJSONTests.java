@@ -25,11 +25,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Ignore;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Disabled;
 
 /**
  *
@@ -40,14 +39,10 @@ public class PeriodDomJSONTests {
     
     ObjectMapper mapper;
     
-    @Before
+    @BeforeEach
     public void setUp() {
         mapper = configureMapper();
     }
-    
-    @After
-    public void tearDown() {
-    }    
     
     @Test
     public void ppaCanBeSavedAndBack() throws Exception {
@@ -55,11 +50,9 @@ public class PeriodDomJSONTests {
         PPA org = new PPA(24, 0.24, 5, 0.5, 10, 0.1, 1, 0.01, 0.12, 0.13, 0.14);
         
         String json = mapper.writeValueAsString(org);
-        // System.out.println(json);
         PPA cpy = mapper.readValue(json, PPA.class);
         
         String json2 = mapper.writeValueAsString(cpy);
-        // System.out.println(json2);
         
         assertEquals(json, json2);
         assertEquals(org, cpy);
@@ -81,11 +74,9 @@ public class PeriodDomJSONTests {
                 , new PPA(24,2,10), new PPA(24,3,10), new PPA(24,4,10));
         
         String json = mapper.writeValueAsString(org);
-        //System.out.println(json);
         CosComponent cpy = mapper.readValue(json, CosComponent.class);
         
         String json2 = mapper.writeValueAsString(org);
-        //System.out.println(json2);
         
         assertEquals(json, json2);
         assertEquals(org, cpy);
@@ -180,9 +171,7 @@ public class PeriodDomJSONTests {
         
         assertEquals(json, json2);
         assertEquals(org, cpy);
-        
     }    
-    
     
     @Test
     public void SRPPACanBeSavedAndReadFromAbstract() throws Exception {
@@ -212,15 +201,12 @@ public class PeriodDomJSONTests {
         org.setFit(fit);
         
         String json = mapper.writeValueAsString(org);
-        //System.out.println(json);
         PPAResult cpy = mapper.readValue(json, PPAResult.class);
         
         String json2 = mapper.writeValueAsString(cpy);
-        //System.out.println(json2);
         
         assertEquals(json, json2);
         assertEquals(org, cpy);
-        
     }    
     
     @Test
@@ -246,15 +232,12 @@ public class PeriodDomJSONTests {
         org.setFit(fit);
         
         String json = mapper.writeValueAsString(org);
-        //System.out.println(json);
         PPAResult cpy = mapper.readValue(json, PPAResult.class);
         
         String json2 = mapper.writeValueAsString(cpy);
-        //System.out.println(json2);
         
         assertEquals(json, json2);
         assertEquals(org, cpy);
-        
     }   
 
     @Test
@@ -280,15 +263,12 @@ public class PeriodDomJSONTests {
         org.setFit(fit);
         
         String json = mapper.writeValueAsString(org);
-        //System.out.println(json);
         PPAResult cpy = mapper.readValue(json, PPAResult.class);
         
         String json2 = mapper.writeValueAsString(cpy);
-        //System.out.println(json2);
         
         assertEquals(json, json2);
         assertEquals(org, cpy);
-        
     }   
     
     @Test
@@ -313,20 +293,17 @@ public class PeriodDomJSONTests {
         org.setFit(fit);
         
         String json = mapper.writeValueAsString(org);
-        //System.out.println(json);
         PPAResult cpy = mapper.readValue(json, PPAResult.class);
         
         String json2 = mapper.writeValueAsString(cpy);
-        //System.out.println(json2);
         
         assertEquals(json, json2);
         assertEquals(org, cpy);
-        
     }   
     
     
     @Test
-    @Ignore("Generic list saving with inherited types is not working")
+    @Disabled("Generic list saving with inherited types is not working")
     public void canBeSavedAndReadFromList() throws Exception {
         
         FFT_PPA org = new FFT_PPA();
@@ -360,18 +337,13 @@ public class PeriodDomJSONTests {
         list.add(org2);
         
         String json = mapper.writeValueAsString(list);
-        //System.out.println(json);
         List<PPAResult> cpy = mapper.readValue(json, new TypeReference<List<PPAResult>>() { });
         
         String json2 = mapper.writeValueAsString(cpy);
-        //System.out.println("--------");
-        //System.out.println(json2);
         
         assertEquals(json, json2);
         assertEquals(list, cpy);
-        
     }    
-    
     
     @Test
     public void canBeSavedFromTypedInnerList() throws Exception {
@@ -407,33 +379,25 @@ public class PeriodDomJSONTests {
         list.list.add(org2);
         
         String json = mapper.writeValueAsString(list);
-        //System.out.println(json);
         TypedList cpy = mapper.readValue(json, TypedList2.class);
         
         String json2 = mapper.writeValueAsString(cpy);
-        //System.out.println("--------");
-        //System.out.println(json2);
         
         assertEquals(json, json2);
         assertEquals(list, cpy);
-
     }    
-    
     
     @Test
     public void failedPPACanBeSavedAndReadFromAbstract() throws Exception {
         
         FailedPPA org = new FailedPPA("yes");
         String json = mapper.writeValueAsString(org);
-        //System.out.println(json);
         PPAResult cpy = mapper.readValue(json, PPAResult.class);
         
         String json2 = mapper.writeValueAsString(org);
-        //System.out.println(json2);
         
         assertEquals(json, json2);
         assertEquals(org, cpy);
-        
     }    
     
     public static ObjectMapper configureMapper() {

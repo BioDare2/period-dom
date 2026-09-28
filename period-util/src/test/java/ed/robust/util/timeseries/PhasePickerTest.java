@@ -11,10 +11,8 @@ import ed.robust.error.RobustProcessException;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
-import org.junit.AfterClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -25,19 +23,8 @@ public class PhasePickerTest {
     public PhasePickerTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
     @Test
     public void testAveragePhases() {
-        
-        
-        System.out.println("averagePhases");
     
         List<Double> phases = Arrays.asList(0.0,1.0,2.0,1.0);
         
@@ -73,7 +60,6 @@ public class PhasePickerTest {
     
     @Test
     public void testFindPPAByAvgMax() throws InterruptedException {
-        System.out.println("findPPAByAvgMax");
         
         TimeSeries data = new TimeSeries();
         data.add(5,5);
@@ -89,9 +75,6 @@ public class PhasePickerTest {
         data.add(16,7);
         data.add(17,4);
         data.add(18,5);
-        
-        
-        
         
         double expPeriod = 10;
         
@@ -114,14 +97,7 @@ public class PhasePickerTest {
         
         EPS = 0.1;
         
-        /*
-        data = TSGenerator.makeCos(N, 1, expPeriod, expPhase,expAmp);        
-        data = TSGenerator.sum(data,TSGenerator.makeCos(N, 1, expPeriod/3, expPhase,expAmp/3));
-        data = TSGenerator.sum(data,TSGenerator.makeCos(N, 1, expPeriod/3*4, expPhase,expAmp/2));
-        */
-        
         data = TSGenerator.makeDblPulse(N, 1, expPeriod, expPhase,expAmp);
-        //data = TSGenerator.addNoise(data, 0.1);
         
         result = PhasePicker.findPPAByAvgMax(data, expPeriod);
         
@@ -131,12 +107,10 @@ public class PhasePickerTest {
         assertEquals(expPhase, result.getPhase(),EPS);
         
         assertEquals(expAmp, result.getAmplitude(),EPS);
-        
     }
     
     @Test
     public void testFindPPAByAvgMaxShort() throws InterruptedException {
-        System.out.println("findPPAByAvgMaxShort");
         
         TimeSeries data = new TimeSeries();
         double expPeriod = 10;
@@ -185,13 +159,10 @@ public class PhasePickerTest {
         expPeriod = 0.21;
         result = PhasePicker.findPPAByAvgMax(data, expPeriod);
         assertEquals(expPeriod, result.getPeriod(),EPS);     
-        //System.out.println("Phase: "+result.getPhase()+", PE: "+result.getPhaseError());
     }
-
     
     @Test
     public void testFindPPAByFirstPeak() {
-        System.out.println("findPPAByFistPeak");
         
         TimeSeries data = new TimeSeries();
         data.add(5,6);
@@ -207,9 +178,6 @@ public class PhasePickerTest {
         data.add(16,4);
         data.add(17,4);
         data.add(18,5);
-        
-        
-        
         
         double expPeriod = 10;
         
@@ -242,14 +210,10 @@ public class PhasePickerTest {
         assertEquals(expPhase, result.getPhase(),EPS);
         
         assertEquals(expAmp, result.getAmplitude(),EPS);
-        
-         
-        
     }
     
     @Test
     public void testFindPPAByFirstPeakShortData() {
-        System.out.println("findPPAByFistPeak Short Data");
         
         PPA result;        
         double EPS = 0.01;
@@ -293,13 +257,10 @@ public class PhasePickerTest {
             result = PhasePicker.findPPAByFirstPeak(data, expPeriod);
             fail("IllegalArgumentException expected");
         } catch (IllegalArgumentException e) {};
-        
     }
-
 
     @Test
     public void testFindIndexOf() {
-        System.out.println("findIndexOf");
         
         TimeSeries data = new TimeSeries();
         data.add(5,1);
@@ -339,13 +300,10 @@ public class PhasePickerTest {
         expResult = 5;
         result = PhasePicker.findIndexOf(stop, points);
         assertEquals(expResult, result);
-        
-        
     }
 
     @Test
     public void testFindPPAByFit() throws RobustProcessException, InterruptedException {
-        System.out.println("findPPAByFit");
         
         double expPeriod = 25.6;
         double expPhase = 1;
@@ -355,7 +313,6 @@ public class PhasePickerTest {
         double EPS = 0.1;
         
         TimeSeries data = TSGenerator.makeCos(N, 1, expPeriod, expPhase,expAmp);        
-        //data = TSGenerator.makeStep(N, 1, expPeriod, expPhase,expAmp);
         
         PPA result = PhasePicker.findPPAByFit(data, expPeriod);
         
@@ -365,15 +322,12 @@ public class PhasePickerTest {
         
         assertEquals(expAmp, result.getAmplitude(),EPS);
         
-        
 		double period = 25.2;
                 expPeriod = period;
 		double amp = 3;
                 double phase = 1;
 		
 		TimeSeries p1data = TSGenerator.makeCos(N,1, period, phase,amp);			
-		
-                //if (p1data.length > 0) return p1data;
                 
 		period = 15;
 		amp = 1;
@@ -388,12 +342,10 @@ public class PhasePickerTest {
                 data = TSGenerator.sum(p1data, TSGenerator.sum(p2data,p3data));
                 
                 result = PhasePicker.findPPAByFit(data, expPeriod);
-         System.out.println("Phase: "+result.getPhase()+", PE: "+result.getPhaseError());
+		System.out.println("Phase: "+result.getPhase()+", PE: "+result.getPhaseError());
        
             assertEquals(expPeriod, result.getPeriod(),EPS);
-        
             assertEquals(1, result.getPhase(),EPS);
-        
             assertEquals(3, result.getAmplitude(),EPS);
    }
 }

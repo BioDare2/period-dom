@@ -6,17 +6,19 @@ package ed.robust.util.cosfit;
 
 import ed.robust.dom.data.TimeSeries;
 import ed.robust.dom.tsprocessing.PPA;
-import ed.robust.util.Configuration;
 import ed.robust.util.timeseries.TSGenerator;
 import ed.robust.util.timeseries.TimeSeriesFileHandler;
+
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -25,18 +27,18 @@ import static org.junit.Assert.*;
 public class LSCosFitterTest {
     
     static final double EPS = 1E-6;
+
+    @TempDir
+    Path tempDir;
     
     public LSCosFitterTest() {
     }
-
-    
     
     /**
      * Test of makeFitCos method, of class LSCosFitter.
      */
     @Test
     public void testFitCos() throws IOException {
-        System.out.println("fitCos");
         
         int N = 100;
         double step = 1;
@@ -48,6 +50,8 @@ public class LSCosFitterTest {
         
         LSCosFitter instance = new LSCosFitter();
         PPA result = instance.fitCos(fit, period);
+
+	File cosFile = tempDir.resolve("cos.csv").toFile();
         
         assertEquals(period, result.getPeriod(),EPS);
         assertEquals(amp, result.getAmplitude(),EPS);
@@ -55,8 +59,7 @@ public class LSCosFitterTest {
         
         phase = 6;
         fit = TSGenerator.makeCos(N, step, period, phase,amp);
-        TimeSeriesFileHandler.saveToText(fit, Configuration.tempFile("cos.csv"), ",");
-        
+        TimeSeriesFileHandler.saveToText(fit, cosFile, ",");
         
         for (phase = 0;phase<period;phase+=1) {
             amp = Math.random()*100+1;
@@ -67,9 +70,7 @@ public class LSCosFitterTest {
             assertEquals(period, result.getPeriod(),EPS);
             assertEquals(amp, result.getAmplitude(),EPS);
             assertEquals(phase, result.getPhase(),EPS);           
-            //System.out.println("P:"+phase+", "+result.getPhase());
         }
-        
         
         for (phase = 0;phase<24;phase+=1) {
             amp = Math.random()*10+1;
@@ -83,21 +84,18 @@ public class LSCosFitterTest {
             assertEquals(phase, result.getPhase(),0.01);           
        }
     }
-    
 
     /**
      * Test of makeFitCos method, of class LSCosFitter.
      */
     @Test
     public void testFitException() throws IOException {
-        System.out.println("fitCosException");
         
         int N = 1;
         double step = 1;
         double period = 23.6;
         double phase = 10;
         double amp = 4.1;
-        
         
         TimeSeries fit = new TimeSeries();
         LSCosFitter instance = new LSCosFitter();
@@ -129,7 +127,6 @@ public class LSCosFitterTest {
      */
     @Test
     public void testFitCosVis() throws IOException {
-        System.out.println("fitCosVis");
         
         int N = 100;
         double step = 1;
@@ -137,9 +134,10 @@ public class LSCosFitterTest {
         double phase = 0;
         double amp = 4.1;
         
-        
         LSCosFitter instance = new LSCosFitter();
         List<TimeSeries> series = new ArrayList<>();
+
+	File phaseFile = tempDir.resolve("phase.csv").toFile();
         
         for (phase = 0;phase<24;phase+=1) {
             amp = Math.random()*10+1;
@@ -157,17 +155,14 @@ public class LSCosFitterTest {
             fit = TSGenerator.addTrend(fit, 0, result.getOffset());
             series.add(fit);
        }
-        
-        TimeSeriesFileHandler.saveToText(series, Configuration.tempFile("phase.csv"), ",");
+        TimeSeriesFileHandler.saveToText(series, phaseFile, ",");
     }
-    
     
     /**
      * Test of makeWaveMatrix method, of class LSCosFitter.
      */
     @Test
     public void testMakeWaveMatrix() {
-        System.out.println("makeWaveMatrix");
         double[] times = {0,6,12,24};
         double period = 24;
         
@@ -190,7 +185,6 @@ public class LSCosFitterTest {
      */
     @Test
     public void testGetWaveCoeficients() {
-        System.out.println("getWaveCoeficients");
         double[][] waveM = new double[][]{{0,1},{2,3},{4,5}};
         double[] expX = {1,2};
         double[] B = {0*1+1*2,2*1+3*2,4*1+5*2};
@@ -206,7 +200,6 @@ public class LSCosFitterTest {
         double[] resultC = result.getColumn(0);
         
         assertArrayEquals(expX,resultC,EPS);
-        
     }
 
     /**
@@ -214,9 +207,7 @@ public class LSCosFitterTest {
      */
     @Test
     public void testAssemblePPA() {
-        System.out.println("assemblePPA");
-        
-        
+
         RealMatrix coefs = MatrixUtils.createColumnRealMatrix(new double[]{1,0,0});
         
         double period = 24;

@@ -4,7 +4,7 @@
   <parent>
     <groupId>ed.biodare.period</groupId>
     <artifactId>period-parent</artifactId>
-    <version>2.1.1-SNAPSHOT</version>
+    <version>2.1.2-SNAPSHOT</version>
   </parent>	
   <artifactId>period-dom</artifactId>
   <packaging>jar</packaging>
@@ -13,9 +13,6 @@
   </properties>
   <name>BD2Period Dom</name>
   <description>DOM for period analysis of timeseries data</description>
-  
-
-  
   
   <dependencyManagement>
     <dependencies>
@@ -62,8 +59,8 @@
     </dependency>                                                                                               
     
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
       <scope>test</scope>
     </dependency>
 

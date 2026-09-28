@@ -13,9 +13,9 @@ import ed.robust.util.timeseries.TSGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -30,7 +30,6 @@ public class PPAMultiAnalyserTest {
     public PPAMultiAnalyserTest() {
     }
 
-
     static class TestingPPAMultiAnalyser extends PPAMultiAnalyser {
         
         public TestingPPAMultiAnalyser(PPAAnalyser analyser, int threads, int defChunk) {
@@ -40,7 +39,6 @@ public class PPAMultiAnalyserTest {
         public TestingPPAMultiAnalyser() {
             super(new TestingPPAAnalyser(), 1, 10);
         }
-        
     }
     
     static class TestingPPAAnalyser implements PPAAnalyser {
@@ -56,13 +54,11 @@ public class PPAMultiAnalyserTest {
         public String getMethod() {
             return "testingAnalyser";
         }
-        
     }
     
     TestingPPAMultiAnalyser instance;
-    @Before
+    @BeforeEach
     public void setUp() {
-        
         instance = new TestingPPAMultiAnalyser();
     }
 
@@ -76,8 +72,6 @@ public class PPAMultiAnalyserTest {
         assertEquals(24.0, res.getPeriod(), 0.1);
         assertEquals(1.0, res.getPhase(), 0.1);
         assertEquals(10.0, res.getAmplitude(), 0.5);
-        
-        
     }
     
     @Test
@@ -121,7 +115,6 @@ public class PPAMultiAnalyserTest {
         for (int i =0; i< periods.size(); i++) {
             assertEquals(periods.get(i), res.get(i).getPeriod(), 0.1);
         }
-       
     }
 
     TimeSeries setValue(TimeSeries data, double val, int ix) {
@@ -136,5 +129,4 @@ public class PPAMultiAnalyserTest {
         mod.addAll(points.subList(ix+1, points.size()));
         return new TimeSeries(mod);
     }
-        
 }

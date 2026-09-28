@@ -17,10 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.AfterClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -30,20 +28,10 @@ public class NLLSCosFitterTest {
     
     public NLLSCosFitterTest() {
     }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
     
-    //@Test 
+    //@Test
+    // NLLSCosFitter is deprecated (use LSCosFitter instead)
     public void testFitRealData() throws Exception {
-        System.out.println("test Real data");
-        //List<TimeSeries> list = TimeSeriesFileHandler.readFromText(new File("D:/Performance/inData.csv"), ",",4);
         List<TimeSeries> list = TimeSeriesFileHandler.readFromText(new File("D:/Performance/inData.csv"), ",",4);
         TimeSeries data = list.get(1);
         TimeSeries orgData = data;
@@ -73,19 +61,12 @@ public class NLLSCosFitterTest {
         TimeSeries fit3 = calculateFit(orgData, result);
         System.out.println("P poly trend:"+result.getPeriod()+"\tPh:"+result.getPhase()+"\tA:"+result.getAmplitude()+"\tRP:"+rotatatedPhase);
         
-        
         list = Arrays.asList(data,fit,orgData,fit2,polyData,fit3);
-        
-        
-        
         TimeSeriesFileHandler.saveToText(list, new File("E:/Temp/fit.csv"), ",");
-        
     }
-    
     
     @Test
     public void testSingularMatrix() throws IOException, RobustProcessException {
-        System.out.println("singular matrix");
         double EPS = 0.1;
         
         double step = 1;
@@ -97,13 +78,6 @@ public class NLLSCosFitterTest {
         
         TimeSeries data = TSGenerator.makeDblPulse(N, step, period, phase, amp);
         data = TSGenerator.lineDetrended(data);
-        //data = TSGenerator.makeStep(N, step, period, phase, amp);
-        //data = TSGenerator.makeWave(N, step, period, phase, amp);
-        
-        //data = TSGenerator.addTrend(data, 0, -TSGenerator.getMeanValue(data));
-        
-        //TimeSeriesFileHandler.saveToText(data, new File("E:/Temp/in.csv"), ",");
-        
         
         NLLSCosFitter instance = new NLLSCosFitter();
 
@@ -112,13 +86,9 @@ public class NLLSCosFitterTest {
         TimeSeries fit = calculateFit(data,result);
         List<TimeSeries> list = Arrays.asList(data,fit);
         
-        //TimeSeriesFileHandler.saveToText(list, new File("E:/Temp/fit-f1.csv"), ",");
-        
         assertEquals(period, result.getPeriod(),EPS);
         assertEquals(0, result.getPeriodError(),EPS);
-        //assertEquals(-phase, result.getPhase(),EPS);
         assertEquals(0, result.getPhaseError(),EPS);
-        //assertEquals(amp, result.getAmplitude(),EPS);
         assertEquals(0, result.getAmplitudeError(),EPS);
         
         System.out.println("P:"+result.getPeriod()+"\tPh:"+result.getPhase()+"\tA:"+result.getAmplitude());
@@ -126,7 +96,6 @@ public class NLLSCosFitterTest {
     
     @Test
     public void testFitCos() throws IOException, RobustProcessException {
-        System.out.println("fitCos");
         double EPS = 0.1;
         
         double step = 0.5;
@@ -137,14 +106,6 @@ public class NLLSCosFitterTest {
         double amp = 2.5;
         
         TimeSeries data = TSGenerator.makeCos(N, step, period, phase,amp);
-        //data = TSGenerator.makeDblPulse(N, step, period, phase, amp);
-        //data = TSGenerator.makeStep(N, step, period, phase, amp);
-        //data = TSGenerator.makeWave(N, step, period, phase, amp);
-        
-        //data = TSGenerator.addTrend(data, 0, -TSGenerator.getMeanValue(data));
-        
-        //TimeSeriesFileHandler.saveToText(data, new File("E:/Temp/in.csv"), ",");
-        
         
         NLLSCosFitter instance = new NLLSCosFitter();
 
@@ -152,8 +113,6 @@ public class NLLSCosFitterTest {
         
         TimeSeries fit = calculateFit(data,result);
         List<TimeSeries> list = Arrays.asList(data,fit);
-        
-        //TimeSeriesFileHandler.saveToText(list, new File("E:/Temp/fit.csv"), ",");
         
         assertEquals(period, result.getPeriod(),EPS);
         assertEquals(0, result.getPeriodError(),EPS);
