@@ -17,6 +17,29 @@
   <name>BD2Period Parent</name>
   <description>Parent and aggregator for building BioDare period dom and utils</description>
   
+  <repositories>
+    <repository>
+      <id>nexus</id>
+      <name>Nexus on tomato</name>
+      <url>http://tomato.bio.ed.ac.uk:8883/repository/biodare/</url>
+      <releases><enabled>true</enabled></releases>
+      <snapshots><enabled>true</enabled></snapshots>
+    </repository>
+  </repositories>
+
+  <distributionManagement>
+    <repository>
+      <id>nexus</id>
+      <name>Releases to Nexus on tomato</name>
+      <url>http://tomato.bio.ed.ac.uk:8883/repository/biodare-rel/</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus</id>
+      <name>Snapshots to Nexus on tomato</name>
+      <url>http://tomato.bio.ed.ac.uk:8883/repository/biodare-dev/</url>
+    </snapshotRepository>
+  </distributionManagement>
+  
   <scm>
     <connection>scm:git:git@github.com:tzielins/BioDare2-period.git</connection>
     <url>scm:git:git@github.com:tzielins/BioDare2-period.git</url>
