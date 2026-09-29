@@ -6,4 +6,14 @@
       <password>NEXUS_PASS_PLACEHOLDER</password>
     </server>
   </servers>
+
+  <mirrors>
+    <mirror>
+      <id>allow-http</id>
+      <mirrorOf>maven-default-http-blocker</mirrorOf>
+      <name>Override HTTP Blocker</name>
+      <url>http://0.0.0.0/</url>
+      <blocked>false</blocked>
+    </mirror>
+  </mirrors>
 </settings>
