@@ -9,11 +9,18 @@
 
   <mirrors>
     <mirror>
-      <id>allow-http</id>
+      <id>unblock-http</id>
       <mirrorOf>maven-default-http-blocker</mirrorOf>
-      <name>Override HTTP Blocker</name>
+      <name>Unblock HTTP</name>
       <url>http://0.0.0.0/</url>
       <blocked>false</blocked>
+    </mirror>
+
+    <mirror>
+      <id>nexus-mirror</id>
+      <mirrorOf>*</mirrorOf>
+      <name>Nexus on tomato</name>
+      <url>http://tomato.bio.ed.ac.uk:8883/repository/biodare/</url>
     </mirror>
   </mirrors>
 </settings>
